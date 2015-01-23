@@ -110,6 +110,8 @@
 		857533231A6414020057028C /* MAFOverlayPresentationContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAFOverlayPresentationContext.h; sourceTree = "<group>"; };
 		8575BBF91A70C25A00A0D6B2 /* MAFOverlay.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MAFOverlay.podspec; sourceTree = "<group>"; };
 		8575BBFA1A71FD9A00A0D6B2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		8575BBFC1A72013300A0D6B2 /* OverlayLandscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = OverlayLandscape.png; sourceTree = "<group>"; };
+		8575BBFD1A72013300A0D6B2 /* OverlayPortrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = OverlayPortrait.png; sourceTree = "<group>"; };
 		85B6C45C1A671C87002AB16E /* MAFOverlayPresentationLayoutAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAFOverlayPresentationLayoutAttributes.h; sourceTree = "<group>"; };
 		85B6C45D1A671C87002AB16E /* MAFOverlayPresentationLayoutAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAFOverlayPresentationLayoutAttributes.m; sourceTree = "<group>"; };
 		85FB9C901A7068EB0076226B /* MAFOptionAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAFOptionAction.h; sourceTree = "<group>"; };
@@ -163,6 +165,8 @@
 			children = (
 				8575BBF91A70C25A00A0D6B2 /* MAFOverlay.podspec */,
 				8575BBFA1A71FD9A00A0D6B2 /* README.md */,
+				8575BBFC1A72013300A0D6B2 /* OverlayLandscape.png */,
+				8575BBFD1A72013300A0D6B2 /* OverlayPortrait.png */,
 				850F37BC1A55B88F001D1EE3 /* MAFOverlay */,
 				850F37C91A55B88F001D1EE3 /* MAFOverlayTests */,
 				850F37D91A55B905001D1EE3 /* MAFOverlayExample */,

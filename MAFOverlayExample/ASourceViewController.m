@@ -36,15 +36,15 @@
 
     }
 
-    MAFOptionAction *optionAction = [MAFOptionAction optionActionWithTitle:@"Press Left Bar Button" detailText:@"Fakes as though as hit from left" checked:NO handler:^{
+    MAFOptionAction *optionAction = [MAFOptionAction optionActionWithTitle:@"Option Action One" detailText:@"Presents from bar button" checked:NO handler:^{
 //        [self didPressAButton:self.navigationItem.leftBarButtonItem];
     }];
 
-    MAFOptionAction *optionAction2 = [MAFOptionAction optionActionWithTitle:@"Press Original Button" detailText:nil checked:YES handler:^{
+    MAFOptionAction *optionAction2 = [MAFOptionAction optionActionWithTitle:@"Option Action No Detail" detailText:nil checked:YES handler:^{
 //        [self didPressAButton:sender];
     }];
 
-    MAFOptionAction *optionAction3 = [MAFOptionAction optionActionWithTitle:@"Press Right Bar Button" detailText:@"Fakes as though as hit from Right" checked:NO handler:^{
+    MAFOptionAction *optionAction3 = [MAFOptionAction optionActionWithTitle:@"Option Action Three" detailText:@"Some detail" checked:NO handler:^{
 //        [self didPressAButton:self.navigationItem.rightBarButtonItem];
     }];
 

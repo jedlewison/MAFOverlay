@@ -12,7 +12,7 @@
 @interface APresentedViewController ()
 
 @property (nonatomic, readwrite) MAFOverlayPresentationCoordinator *overlayPresentationCoordinator;
-@property (nonatomic, weak) IBOutlet UIButton *theButton;
+@property (nonatomic, weak) IBOutlet UILabel *myLabel;
 @end
 
 @implementation APresentedViewController
@@ -24,7 +24,7 @@
 }
 
 -(CGSize)preferredContentSize {
-    return CGSizeMake(140, 90);
+    return (CGSizeMake(self.myLabel.intrinsicContentSize.width + 20, self.myLabel.intrinsicContentSize.height + 20));
 }
 
 -(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
