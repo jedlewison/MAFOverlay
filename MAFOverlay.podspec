@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
                    DESC
 
   s.homepage     = "https://github.com/jedlewison/MAFOverlay"
-  s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
+  s.screenshots  = "https://raw.githubusercontent.com/jedlewison/MAFOverlay/master/OverlayPortrait.png", "https://raw.githubusercontent.com/jedlewison/MAFOverlay/master/OverlayLandscape.png"
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author             = { "Jed Lewison" => "jed@magicappfactory.com" }
   s.social_media_url   = "http://twitter.com/jedlewison"
