@@ -10,10 +10,10 @@
 #import "MAFOverlayPresentationController.h"
 #import "MAFOverlayPresentationAnimator.h"
 
-@interface MAFOverlayPresentationCoordinator ()
+@interface MAFOverlayPresentationCoordinator () <UIViewControllerTransitioningDelegate>
 
 @property (nonatomic) MAFOverlayPresentationAnimator *animator;
-@property (nonatomic) MAFOverlayPresentationController *presentationController;
+@property (nonatomic, weak) MAFOverlayPresentationController *presentationController;
 @property (nonatomic) MAFOverlayArrowDirection arrowDirection;
 @property (nonatomic) UIView *arrowView;
 @property (nonatomic, weak, readwrite) UIViewController *presentedViewController;
@@ -32,33 +32,19 @@
     overlayPresentationCoordinator.presentedViewController = presentedViewController;
     presentedViewController.modalPresentationStyle = UIModalPresentationCustom;
     if ([UIPresentationController class]) {
-        presentedViewController.transitioningDelegate = overlayPresentationCoordinator.presentationController;
+        // The coordinator is the transitioning delegate so that we don't have to store a strong reference to the controller, creating a reference cycle, since the presentedViewController also will have a strong reference to it
+        presentedViewController.transitioningDelegate = overlayPresentationCoordinator;
     } else {
         presentedViewController.transitioningDelegate = overlayPresentationCoordinator.animator;
-
     }
-    overlayPresentationCoordinator.minimumContainerEdgeInsets = UIEdgeInsetsMake(5,5,5,5);
+    
+    CGFloat statusBarFrameHeight = MIN([[UIApplication sharedApplication] statusBarFrame].size.width, [[UIApplication sharedApplication] statusBarFrame].size.height);
+    overlayPresentationCoordinator.minimumContainerEdgeInsets = UIEdgeInsetsMake(MAX(5, statusBarFrameHeight),5,5,5);
     overlayPresentationCoordinator.anchorPoint = (CGPoint){0.5, 0.5};
     [presentedViewController.view setClipsToBounds:YES];
     return overlayPresentationCoordinator;
 }
 
-- (MAFOverlayPresentationController *)presentationController {
-    if (!_presentationController && [UIPresentationController class]) {
-        _presentationController = [MAFOverlayPresentationController overlayPresentationControllerWithDataSource:self
-                                                                                        presentedViewController:self.presentedViewController];
-    }
-    return _presentationController;
-}
-
-
--(MAFOverlayPresentationAnimator *)animator {
-    if (!_animator && ![UIPresentationController class]) {
-        _animator = [MAFOverlayPresentationAnimator overlayPresentationAnimatorWithDataSource:self
-                                                                      presentedViewController:self.presentedViewController];
-    }
-    return _animator;
-}
 
 -(void)setSourceBarButtonItem:(UIBarButtonItem *)sourceBarButtonItem {
     _sourceBarButtonItem = sourceBarButtonItem;
@@ -68,6 +54,24 @@
             [self setSourceView:obj];
         }
     }
+}
+
+#pragma mark - UIViewControllerTransitioningDelegate (for Presentation controller)
+
+-(UIPresentationController *)presentationControllerForPresentedViewController:(UIViewController *)presented presentingViewController:(UIViewController *)presenting sourceViewController:(UIViewController *)source {
+    MAFOverlayPresentationController *controller = [MAFOverlayPresentationController overlayPresentationControllerWithDataSource:self
+                                                                                                         presentedViewController:presented];
+    self.presentationController = controller;
+    return controller;
+}
+
+
+-(MAFOverlayPresentationAnimator *)animator {
+    if (!_animator && ![UIPresentationController class]) {
+        _animator = [MAFOverlayPresentationAnimator overlayPresentationAnimatorWithDataSource:self
+                                                                      presentedViewController:self.presentedViewController];
+    }
+    return _animator;
 }
 
 #pragma mark - MAFOverlayPresentationDataSource
