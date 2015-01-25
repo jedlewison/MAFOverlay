@@ -9,52 +9,16 @@
 #import "ASourceViewController.h"
 #import "APresentedViewController.h"
 #import "MAFOverlayPresentationCoordinator.h"
-#import "MAFOptionActionSheetController.h"
+#import <MAFActionSheetController/MAFActionSheetController.h>
 
 @interface ASourceViewController ()
-@property (nonatomic) NSUInteger counter;
+
 @end
 
 @implementation ASourceViewController
 
 
--(IBAction)didPressAButton:(id)sender {
-
-    self.counter++;
-
-    if (self.counter % 2) {
-
-        MAFOptionActionSheetController *optionActionSheetController = [self.storyboard instantiateViewControllerWithIdentifier:@"optionAction"];//[MAFOptionActionSheetController optionActionSheetController];
-
-        optionActionSheetController.overlayPresentationCoordinator = [MAFOverlayPresentationCoordinator overlayPresentationCoordinatorWithPresentedViewController:optionActionSheetController];
-
-
-    if ([sender isKindOfClass:[UIBarButtonItem class]]) {
-        [optionActionSheetController.overlayPresentationCoordinator setSourceBarButtonItem:sender];
-    } else {
-        [optionActionSheetController.overlayPresentationCoordinator setSourceView:sender];
-
-    }
-
-    MAFOptionAction *optionAction = [MAFOptionAction optionActionWithTitle:@"Option Action One" detailText:@"Presents from bar button" checked:NO handler:^{
-//        [self didPressAButton:self.navigationItem.leftBarButtonItem];
-    }];
-
-    MAFOptionAction *optionAction2 = [MAFOptionAction optionActionWithTitle:@"Option Action No Detail" detailText:nil checked:YES handler:^{
-//        [self didPressAButton:sender];
-    }];
-
-    MAFOptionAction *optionAction3 = [MAFOptionAction optionActionWithTitle:@"Option Action Three" detailText:@"Some detail" checked:NO handler:^{
-//        [self didPressAButton:self.navigationItem.rightBarButtonItem];
-    }];
-
-    [optionActionSheetController addOptionAction:optionAction];
-    [optionActionSheetController addOptionAction:optionAction2];
-        [optionActionSheetController addOptionAction:optionAction3];
- [self presentViewController:optionActionSheetController animated:YES completion:NULL];
-    } else {
-
-
+-(IBAction)presentSimpleOverlay:(id)sender {
     APresentedViewController *overlayViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"APresentedViewController"];
     if ([sender isKindOfClass:[UIBarButtonItem class]]) {
         [overlayViewController.overlayPresentationCoordinator setSourceBarButtonItem:sender];
@@ -62,13 +26,46 @@
         [overlayViewController.overlayPresentationCoordinator setSourceView:sender];
     }
     [self presentViewController:overlayViewController animated:YES completion:NULL];
-    }
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.destinationViewController respondsToSelector:@selector(overlayPresentationCoordinator)]) {
-//        [segue.destinationViewController overlayPresentationCoordinator].sourceBarButtonItem = [self.toolbarItems lastObject];
+    if ([segue.identifier isEqualToString:@"segueWithSource"] && [segue.destinationViewController respondsToSelector:@selector(overlayPresentationCoordinator)]) {
+        [segue.destinationViewController overlayPresentationCoordinator].sourceBarButtonItem = [self.toolbarItems lastObject];
+        [segue.destinationViewController setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+    } else if ([segue.identifier isEqualToString:@"segueWithCrossDissolve"] && [segue.destinationViewController respondsToSelector:@selector(overlayPresentationCoordinator)]) {
+        [segue.destinationViewController setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     }
+
+}
+
+-(IBAction)presentActionSheetController:(id)sender {
+    
+    MAFActionSheetController *actionSheetController = [MAFActionSheetController actionSheetController];
+    
+    MAFActionSheetItem *optionAction = [MAFActionSheetItem actionSheetItemWithTitle:@"Change Background To Orange" detailText:@"Detail" checked:NO handler:^{
+        [UIView animateWithDuration:UINavigationControllerHideShowBarDuration animations:^{
+            self.view.backgroundColor = [UIColor orangeColor];
+        }];
+    }];
+    
+    MAFActionSheetItem *optionAction2 = [MAFActionSheetItem actionSheetItemWithTitle:@"Do Nothing" detailText:@"Has Custom Background View" checked:YES handler:nil];
+    MAFActionSheetItem *optionAction3 = [MAFActionSheetItem actionSheetItemWithTitle:@"Another No-op" detailText:@"Detail" checked:NO handler:nil];
+    
+    
+    UIView *someView = [[UIView alloc] initWithFrame:self.view.bounds];
+    [someView setBackgroundColor:[UIColor yellowColor]];
+    [optionAction2 setCustomBackgroundView:someView];
+    
+    [actionSheetController addItem:optionAction];
+    [actionSheetController addItem:optionAction2];
+    [actionSheetController addItem:optionAction3];
+    if ([sender isKindOfClass:[UIBarButtonItem class]]) {
+        [actionSheetController.overlayPresentationCoordinator setSourceBarButtonItem:sender];
+    } else {
+        [actionSheetController.overlayPresentationCoordinator setSourceView:sender];
+    }
+    
+    [self presentViewController:actionSheetController animated:YES completion:nil];
 }
 
 @end

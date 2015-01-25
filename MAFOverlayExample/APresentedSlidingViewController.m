@@ -21,7 +21,6 @@
     [super awakeFromNib];
 
     self.overlayPresentationCoordinator = [MAFOverlayPresentationCoordinator overlayPresentationCoordinatorWithPresentedViewController:self]; // assigns the transitioningDelegate
-    self.overlayPresentationCoordinator.anchorPoint = CGPointMake(0.5f,.1f);
 }
 
 -(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -29,7 +28,7 @@
 }
 
 -(CGSize)preferredContentSize {
-    return (CGSize){20009,120};
+    return (CGSize){280,120};
 }
 
 @end

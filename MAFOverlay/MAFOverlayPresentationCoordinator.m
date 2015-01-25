@@ -10,6 +10,14 @@
 #import "MAFOverlayPresentationController.h"
 #import "MAFOverlayPresentationAnimator.h"
 
+typedef NS_ENUM(NSUInteger, MAFOverlayArrowDirection) {
+    MAFOverlayArrowDirectionNoArrow,
+    MAFOverlayArrowDirectionUp,
+    MAFOverlayArrowDirectionDown,
+    MAFOverlayArrowDirectionLeft,
+    MAFOverlayArrowDirectionRight
+};
+
 @interface MAFOverlayPresentationCoordinator () <UIViewControllerTransitioningDelegate>
 
 @property (nonatomic) MAFOverlayPresentationAnimator *animator;
@@ -39,7 +47,9 @@
     }
     
     CGFloat statusBarFrameHeight = MIN([[UIApplication sharedApplication] statusBarFrame].size.width, [[UIApplication sharedApplication] statusBarFrame].size.height);
-    overlayPresentationCoordinator.minimumContainerEdgeInsets = UIEdgeInsetsMake(MAX(5, statusBarFrameHeight),5,5,5);
+    UIEdgeInsets minimumContainerEdgeInsets = UIEdgeInsetsMake(MAX(5, statusBarFrameHeight),5,5,5);
+    
+    overlayPresentationCoordinator.minimumContainerEdgeInsets = minimumContainerEdgeInsets;
     overlayPresentationCoordinator.anchorPoint = (CGPoint){0.5, 0.5};
     [presentedViewController.view setClipsToBounds:YES];
     return overlayPresentationCoordinator;
@@ -259,10 +269,10 @@
 
         originForPresentation.y = MAX(originForPresentation.y, MIN(MAX(originForPresentation.y, minimumMargin.top), layoutContainerRect.size.height-(layoutFrame.size.height+minimumMargin.bottom)));
 
-        CGFloat spaceAboveOrigin = originForPresentation.y - minimumMargin.bottom;
-        CGFloat spaceBelowOrigin = (layoutContainerRect.size.height - minimumMargin.top) - originForPresentation.y;
+        CGFloat spaceAboveOrigin = originForPresentation.y - minimumMargin.top;
+        CGFloat spaceBelowOrigin = (layoutContainerRect.size.height - minimumMargin.bottom) - originForPresentation.y;
 
-        if (self.arrowDirection != MAFOverlayArrowDirectionUp && (spaceAboveOrigin >= layoutTargetSize.height || spaceAboveOrigin > spaceBelowOrigin)) {
+        if (self.arrowDirection == MAFOverlayArrowDirectionDown ||  spaceAboveOrigin >= (layoutTargetSize.height+30) || spaceAboveOrigin > spaceBelowOrigin) {
 
             layoutFrame.origin.y = MAX(minimumMargin.top,
                                        originForPresentation.y-(layoutTargetSize.height + marginFromOrigin));

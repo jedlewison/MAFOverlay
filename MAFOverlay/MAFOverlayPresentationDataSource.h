@@ -10,13 +10,6 @@
 #import "MAFOverlayPresentationContext.h"
 #import "MAFOverlayPresentationLayoutAttributes.h"
 
-typedef NS_ENUM(NSUInteger, MAFOverlayArrowDirection) {
-    MAFOverlayArrowDirectionNoArrow,
-    MAFOverlayArrowDirectionUp,
-    MAFOverlayArrowDirectionDown,
-    MAFOverlayArrowDirectionLeft,
-    MAFOverlayArrowDirectionRight
-};
 
 @class MAFOverlayPresentationCoordinator;
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		739D15531EDD9933A50E00F0 /* libPods-MAFOverlayExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC5C29AE5B9CAB919C7A378D /* libPods-MAFOverlayExample.a */; };
 		850F37BE1A55B88F001D1EE3 /* MAFOverlay.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 850F37BD1A55B88F001D1EE3 /* MAFOverlay.h */; };
 		850F37C01A55B88F001D1EE3 /* MAFOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F37BF1A55B88F001D1EE3 /* MAFOverlay.m */; };
 		850F37DD1A55B905001D1EE3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F37DC1A55B905001D1EE3 /* main.m */; };
@@ -20,16 +21,12 @@
 		850F38051A55C300001D1EE3 /* MAFOverlayPresentationCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F38041A55C300001D1EE3 /* MAFOverlayPresentationCoordinator.m */; };
 		850F38081A55C764001D1EE3 /* APresentedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F38071A55C764001D1EE3 /* APresentedViewController.m */; };
 		850F380C1A55D75F001D1EE3 /* MAFOverlayPresentationAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F380B1A55D75F001D1EE3 /* MAFOverlayPresentationAnimator.m */; };
-		856582DE1A70801A00F995F4 /* libMAFOverlay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 850F37BA1A55B88F001D1EE3 /* libMAFOverlay.a */; };
 		8575BBFB1A71FD9A00A0D6B2 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 8575BBFA1A71FD9A00A0D6B2 /* README.md */; };
 		85B6C45E1A671C87002AB16E /* MAFOverlayPresentationLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 85B6C45D1A671C87002AB16E /* MAFOverlayPresentationLayoutAttributes.m */; };
 		85BD6AE51A58F7FC00F30BFA /* MAFOverlay.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 850F37BD1A55B88F001D1EE3 /* MAFOverlay.h */; };
 		85BD6AE71A58F7FC00F30BFA /* MAFOverlayPresentationController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 850F37FF1A55BC37001D1EE3 /* MAFOverlayPresentationController.h */; };
 		85BD6AE81A58F7FC00F30BFA /* MAFOverlayPresentationCoordinator.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 850F38031A55C300001D1EE3 /* MAFOverlayPresentationCoordinator.h */; };
 		85BD6AE91A58F7FC00F30BFA /* MAFOverlayPresentationAnimator.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 850F380A1A55D75F001D1EE3 /* MAFOverlayPresentationAnimator.h */; };
-		85FB9C961A7068EB0076226B /* MAFOptionAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 85FB9C911A7068EB0076226B /* MAFOptionAction.m */; };
-		85FB9C971A7068EB0076226B /* MAFOptionActionSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85FB9C931A7068EB0076226B /* MAFOptionActionSheetController.m */; };
-		85FB9C981A7068EB0076226B /* MAFOptionActionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 85FB9C951A7068EB0076226B /* MAFOptionActionTableViewCell.m */; };
 		85FB9C9B1A7070FD0076226B /* APresentedSlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85FB9C9A1A7070FD0076226B /* APresentedSlidingViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -114,16 +111,12 @@
 		8575BBFD1A72013300A0D6B2 /* OverlayPortrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = OverlayPortrait.png; sourceTree = "<group>"; };
 		85B6C45C1A671C87002AB16E /* MAFOverlayPresentationLayoutAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAFOverlayPresentationLayoutAttributes.h; sourceTree = "<group>"; };
 		85B6C45D1A671C87002AB16E /* MAFOverlayPresentationLayoutAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAFOverlayPresentationLayoutAttributes.m; sourceTree = "<group>"; };
-		85FB9C901A7068EB0076226B /* MAFOptionAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAFOptionAction.h; sourceTree = "<group>"; };
-		85FB9C911A7068EB0076226B /* MAFOptionAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAFOptionAction.m; sourceTree = "<group>"; };
-		85FB9C921A7068EB0076226B /* MAFOptionActionSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAFOptionActionSheetController.h; sourceTree = "<group>"; };
-		85FB9C931A7068EB0076226B /* MAFOptionActionSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAFOptionActionSheetController.m; sourceTree = "<group>"; };
-		85FB9C941A7068EB0076226B /* MAFOptionActionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAFOptionActionTableViewCell.h; sourceTree = "<group>"; };
-		85FB9C951A7068EB0076226B /* MAFOptionActionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAFOptionActionTableViewCell.m; sourceTree = "<group>"; };
 		85FB9C991A7070FD0076226B /* APresentedSlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APresentedSlidingViewController.h; path = MAFOverlayExample/APresentedSlidingViewController.h; sourceTree = SOURCE_ROOT; };
 		85FB9C9A1A7070FD0076226B /* APresentedSlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APresentedSlidingViewController.m; path = MAFOverlayExample/APresentedSlidingViewController.m; sourceTree = SOURCE_ROOT; };
 		882D268EEFCF22410C1C9C9D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9566B6CAA764F777CCB16EFB /* Pods-MAFOverlayExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAFOverlayExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MAFOverlayExample/Pods-MAFOverlayExample.debug.xcconfig"; sourceTree = "<group>"; };
 		C8E1F664CD782AA56DF35425 /* libPods-MAFOverlay.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MAFOverlay.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCA27311FD6EEA6BADFAC747 /* Pods-MAFOverlayExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAFOverlayExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-MAFOverlayExample/Pods-MAFOverlayExample.release.xcconfig"; sourceTree = "<group>"; };
 		DC5C29AE5B9CAB919C7A378D /* libPods-MAFOverlayExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MAFOverlayExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -146,7 +139,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				856582DE1A70801A00F995F4 /* libMAFOverlay.a in Frameworks */,
+				739D15531EDD9933A50E00F0 /* libPods-MAFOverlayExample.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,6 +166,7 @@
 				850F37F31A55B905001D1EE3 /* MAFOverlayExampleTests */,
 				850F37BB1A55B88F001D1EE3 /* Products */,
 				A8B7666434A192E38CDDFA2E /* Frameworks */,
+				A124777CFC6004E3F3141C87 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -219,7 +213,6 @@
 		850F37D91A55B905001D1EE3 /* MAFOverlayExample */ = {
 			isa = PBXGroup;
 			children = (
-				85FB9C8F1A7068EB0076226B /* MAFOptionActionSheetController */,
 				850F37DE1A55B905001D1EE3 /* AppDelegate.h */,
 				850F37DF1A55B905001D1EE3 /* AppDelegate.m */,
 				850F37E11A55B905001D1EE3 /* ASourceViewController.h */,
@@ -300,17 +293,13 @@
 			name = "Protocols and Layout";
 			sourceTree = "<group>";
 		};
-		85FB9C8F1A7068EB0076226B /* MAFOptionActionSheetController */ = {
+		A124777CFC6004E3F3141C87 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				85FB9C901A7068EB0076226B /* MAFOptionAction.h */,
-				85FB9C911A7068EB0076226B /* MAFOptionAction.m */,
-				85FB9C921A7068EB0076226B /* MAFOptionActionSheetController.h */,
-				85FB9C931A7068EB0076226B /* MAFOptionActionSheetController.m */,
-				85FB9C941A7068EB0076226B /* MAFOptionActionTableViewCell.h */,
-				85FB9C951A7068EB0076226B /* MAFOptionActionTableViewCell.m */,
+				9566B6CAA764F777CCB16EFB /* Pods-MAFOverlayExample.debug.xcconfig */,
+				CCA27311FD6EEA6BADFAC747 /* Pods-MAFOverlayExample.release.xcconfig */,
 			);
-			path = MAFOptionActionSheetController;
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		A8B7666434A192E38CDDFA2E /* Frameworks */ = {
@@ -368,9 +357,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 850F37F81A55B905001D1EE3 /* Build configuration list for PBXNativeTarget "MAFOverlayExample" */;
 			buildPhases = (
+				2F1434A209214BFCBEEA2CB9 /* Check Pods Manifest.lock */,
 				850F37D41A55B905001D1EE3 /* Sources */,
 				850F37D51A55B905001D1EE3 /* Frameworks */,
 				850F37D61A55B905001D1EE3 /* Resources */,
+				10487D38039FF302CC911BD3 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -472,6 +463,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		10487D38039FF302CC911BD3 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MAFOverlayExample/Pods-MAFOverlayExample-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2F1434A209214BFCBEEA2CB9 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		850F37B61A55B88F001D1EE3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -500,11 +524,8 @@
 				85FB9C9B1A7070FD0076226B /* APresentedSlidingViewController.m in Sources */,
 				850F37E31A55B905001D1EE3 /* ASourceViewController.m in Sources */,
 				850F37E01A55B905001D1EE3 /* AppDelegate.m in Sources */,
-				85FB9C971A7068EB0076226B /* MAFOptionActionSheetController.m in Sources */,
-				85FB9C961A7068EB0076226B /* MAFOptionAction.m in Sources */,
 				850F37DD1A55B905001D1EE3 /* main.m in Sources */,
 				850F38081A55C764001D1EE3 /* APresentedViewController.m in Sources */,
-				85FB9C981A7068EB0076226B /* MAFOptionActionTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -681,6 +702,7 @@
 		};
 		850F37F91A55B905001D1EE3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9566B6CAA764F777CCB16EFB /* Pods-MAFOverlayExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -699,6 +721,7 @@
 		};
 		850F37FA1A55B905001D1EE3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CCA27311FD6EEA6BADFAC747 /* Pods-MAFOverlayExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

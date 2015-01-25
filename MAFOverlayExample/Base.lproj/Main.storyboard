@@ -17,13 +17,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QoV-BQ-V14">
-                                <rect key="frame" x="277" y="74" width="46" height="30"/>
-                                <state key="normal" title="Button">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QoV-BQ-V14">
+                                <rect key="frame" x="247" y="74" width="48" height="30"/>
+                                <state key="normal" title="Simple">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="didPressAButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="URq-zc-Wdt"/>
+                                    <action selector="presentSimpleOverlay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XVh-CD-1je"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -34,33 +34,33 @@
                         </constraints>
                     </view>
                     <toolbarItems>
-                        <barButtonItem title="Item" id="yeK-NS-XNr">
+                        <barButtonItem title="Segue Fade" id="yeK-NS-XNr">
                             <connections>
-                                <action selector="didPressAButton:" destination="BYZ-38-t0r" id="hrH-uU-rG2"/>
+                                <segue destination="sAu-Ni-4kX" kind="presentation" identifier="segueWithCrossDissolve" id="rRS-8g-AuY"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="wPm-nX-biX"/>
-                        <barButtonItem title="Using segue" id="png-ej-w8j">
+                        <barButtonItem title="Segue Default" id="png-ej-w8j">
                             <connections>
-                                <segue destination="zSm-xd-PNQ" kind="presentation" identifier="overlaySegue" id="npx-Lk-EkL"/>
+                                <segue destination="sAu-Ni-4kX" kind="presentation" id="jGv-M8-7VZ"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="yvC-XI-nzT"/>
-                        <barButtonItem title="Item" id="xJi-b1-1Ki">
+                        <barButtonItem title="Segue From" id="xJi-b1-1Ki">
                             <connections>
-                                <segue destination="sAu-Ni-4kX" kind="presentation" id="T0K-kB-wmU"/>
+                                <segue destination="sAu-Ni-4kX" kind="presentation" identifier="segueWithSource" id="Fbn-8O-pdy"/>
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="MAFOverlay Example" id="up2-ms-JZd">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="AHP-KZ-gal">
+                        <barButtonItem key="leftBarButtonItem" title="Action" id="AHP-KZ-gal">
                             <connections>
-                                <action selector="didPressAButton:" destination="BYZ-38-t0r" id="HJG-33-M28"/>
+                                <action selector="presentActionSheetController:" destination="BYZ-38-t0r" id="3gz-8z-UNc"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="Vq4-3m-7IG">
+                        <barButtonItem key="rightBarButtonItem" title="Simple" id="Vq4-3m-7IG">
                             <connections>
-                                <action selector="didPressAButton:" destination="BYZ-38-t0r" id="88d-y6-Xv1"/>
+                                <action selector="presentSimpleOverlay:" destination="BYZ-38-t0r" id="5Dl-wR-Hgd"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -85,7 +85,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jDF-a4-ERp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1180" y="1078"/>
+            <point key="canvasLocation" x="1938" y="1131"/>
         </scene>
         <!--Presented View Controller-->
         <scene sceneID="UZ2-2U-kp2">
@@ -122,32 +122,6 @@ presented with MAFOverlay!</string>
             </objects>
             <point key="canvasLocation" x="1885" y="86"/>
         </scene>
-        <!--Option Action Sheet Controller-->
-        <scene sceneID="Tu1-en-asq">
-            <objects>
-                <tableViewController storyboardIdentifier="optionAction" useStoryboardIdentifierAsRestorationIdentifier="YES" id="exl-Ru-ZQg" customClass="MAFOptionActionSheetController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Cla-pr-IOg">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Action Cell" id="2gc-hf-Bb3">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2gc-hf-Bb3" id="ukJ-Jq-PWL">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="exl-Ru-ZQg" id="Hk7-qC-f6q"/>
-                            <outlet property="delegate" destination="exl-Ru-ZQg" id="keb-bM-8bc"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="GX6-CJ-wQx" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1769" y="946"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="lUc-Rx-hoD">
             <objects>
@@ -170,4 +144,7 @@ presented with MAFOverlay!</string>
             <point key="canvasLocation" x="305" y="1090"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="rRS-8g-AuY"/>
+    </inferredMetricsTieBreakers>
 </document>
