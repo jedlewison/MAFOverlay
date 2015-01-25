@@ -9,7 +9,7 @@
 #import "APresentedViewController.h"
 #import "MAFOverlayPresentationCoordinator.h"
 
-@interface APresentedViewController ()
+@interface APresentedViewController ()<MAFOverlayPresentationContextTransitioning>
 
 @property (nonatomic, readwrite) MAFOverlayPresentationCoordinator *overlayPresentationCoordinator;
 @property (nonatomic, weak) IBOutlet UILabel *myLabel;
@@ -33,6 +33,10 @@
 
 -(UIModalTransitionStyle)modalTransitionStyle {
     return UIModalTransitionStyleCrossDissolve;
+}
+
+-(void)presentationContextDidDismiss:(id<MAFOverlayPresentationContext>)presentationContext {
+    NSLog(@"did dismiss! %d",[presentationContext presentedViewController] == self);
 }
 
 @end

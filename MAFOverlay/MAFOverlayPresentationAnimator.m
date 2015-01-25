@@ -55,7 +55,32 @@
     
     self.containerView = [transitionContext containerView];
     
-    [self performInitialLayoutIfNeeded];
+    BOOL isBeingPresented = [self.presentedViewController isBeingPresented];
+    BOOL isBeingDismissed = [self.presentedViewController isBeingDismissed];
+    
+    if (isBeingPresented) {
+        
+        if ([self.presentedViewController respondsToSelector:@selector(presentationContextWillPresent:)]) {
+            [self.presentedViewController performSelector:@selector(presentationContextWillPresent:) withObject:self];
+        }
+        
+        if ([self.presentingViewController respondsToSelector:@selector(presentationContextWillPresent:)]) {
+            [self.presentingViewController performSelector:@selector(presentationContextWillPresent:) withObject:self];
+        }
+
+        [self performInitialLayoutIfNeeded];
+        
+    } else if (isBeingDismissed) {
+        if ([self.presentedViewController respondsToSelector:@selector(presentationContextWillDismiss:)]) {
+            [self.presentedViewController performSelector:@selector(presentationContextWillDismiss:) withObject:self];
+        }
+        
+        if ([self.presentingViewController respondsToSelector:@selector(presentationContextWillDismiss:)]) {
+            [self.presentingViewController performSelector:@selector(presentationContextWillDismiss:) withObject:self];
+        }
+        
+
+    }
     
     NSTimeInterval animationDuration = [self transitionDuration:transitionContext];
     
@@ -85,6 +110,25 @@
                          
                      } completion:^(BOOL finished) {
                          [transitionContext completeTransition:YES];
+                         if (isBeingPresented) {
+                             if ([self.presentedViewController respondsToSelector:@selector(presentationContextDidPresent:)]) {
+                                 [self.presentedViewController performSelector:@selector(presentationContextDidPresent:) withObject:self];
+                             }
+                             
+                             if ([self.presentingViewController respondsToSelector:@selector(presentationContextDidPresent:)]) {
+                                 [self.presentingViewController performSelector:@selector(presentationContextDidPresent:) withObject:self];
+                             }
+                             
+                         } else if (isBeingDismissed) {
+                             if ([self.presentedViewController respondsToSelector:@selector(presentationContextDidDismiss:)]) {
+                                 [self.presentedViewController performSelector:@selector(presentationContextDidDismiss:) withObject:self];
+                             }
+                             
+                             if ([self.presentingViewController respondsToSelector:@selector(presentationContextDidDismiss:)]) {
+                                 [self.presentingViewController performSelector:@selector(presentationContextDidDismiss:) withObject:self];
+                             }
+
+                         }
                      }];
 }
 
@@ -216,4 +260,5 @@
     }
     return _decorationView;
 }
+
 @end

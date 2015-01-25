@@ -17,3 +17,11 @@
 -(UIView *)dimmingView;
 
 @end
+
+@protocol MAFOverlayPresentationContextTransitioning <NSObject>
+@optional
+-(void)presentationContextWillPresent:(id<MAFOverlayPresentationContext>)presentationContext;
+-(void)presentationContextDidPresent:(id<MAFOverlayPresentationContext>)presentationContext;
+-(void)presentationContextWillDismiss:(id<MAFOverlayPresentationContext>)presentationContext;
+-(void)presentationContextDidDismiss:(id<MAFOverlayPresentationContext>)presentationContext;
+@end

@@ -47,6 +47,15 @@
 
 -(void)presentationTransitionWillBegin
 {
+    if ([self.presentedViewController respondsToSelector:@selector(presentationContextWillPresent:)]) {
+        [self.presentedViewController performSelector:@selector(presentationContextWillPresent:) withObject:self];
+    }
+    
+    if ([self.presentingViewController respondsToSelector:@selector(presentationContextWillPresent:)]) {
+        [self.presentingViewController performSelector:@selector(presentationContextWillPresent:) withObject:self];
+    }
+
+    
     self.presentedView.autoresizingMask = UIViewAutoresizingNone;
 
     self.containerView.backgroundColor = [UIColor clearColor];
@@ -67,6 +76,16 @@
      } completion:nil];
 }
 
+-(void)presentationTransitionDidEnd:(BOOL)completed {
+    if ([self.presentedViewController respondsToSelector:@selector(presentationContextDidPresent:)]) {
+        [self.presentedViewController performSelector:@selector(presentationContextDidPresent:) withObject:self];
+    }
+    
+    if ([self.presentingViewController respondsToSelector:@selector(presentationContextDidPresent:)]) {
+        [self.presentingViewController performSelector:@selector(presentationContextDidPresent:) withObject:self];
+    }
+}
+
 -(UIModalPresentationStyle)presentationStyle
 {
     return UIModalPresentationCustom;
@@ -77,6 +96,14 @@
 }
 
 -(void)dismissalTransitionWillBegin {
+    if ([self.presentedViewController respondsToSelector:@selector(presentationContextWillDismiss:)]) {
+        [self.presentedViewController performSelector:@selector(presentationContextWillDismiss:) withObject:self];
+    }
+    
+    if ([self.presentingViewController respondsToSelector:@selector(presentationContextWillDismiss:)]) {
+        [self.presentingViewController performSelector:@selector(presentationContextWillDismiss:) withObject:self];
+    }
+    
     id <UIViewControllerTransitionCoordinator> transitionCoordinator =
     [[self presentingViewController] transitionCoordinator];
     
@@ -88,7 +115,14 @@
      } completion:nil];
 }
 
--(void)presentationTransitionDidEnd:(BOOL)completed {
+-(void)dismissalTransitionDidEnd:(BOOL)completed {
+    if ([self.presentedViewController respondsToSelector:@selector(presentationContextDidDismiss:)]) {
+        [self.presentedViewController performSelector:@selector(presentationContextDidDismiss:) withObject:self];
+    }
+    
+    if ([self.presentingViewController respondsToSelector:@selector(presentationContextDidDismiss:)]) {
+        [self.presentingViewController performSelector:@selector(presentationContextDidDismiss:) withObject:self];
+    }
 
 }
 
