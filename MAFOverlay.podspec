@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MAFOverlay"
-  s.version      = "0.0.2"
+  s.version      = "0.0.3"
   s.summary      = "Popover-style overlay presentation coordinator for both iPhone and iPad on iOS 7+."
 
   s.description  = <<-DESC
