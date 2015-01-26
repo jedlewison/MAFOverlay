@@ -272,8 +272,15 @@ typedef NS_ENUM(NSUInteger, MAFOverlayArrowDirection) {
         CGFloat spaceAboveOrigin = originForPresentation.y - minimumMargin.top;
         CGFloat spaceBelowOrigin = (layoutContainerRect.size.height - minimumMargin.bottom) - originForPresentation.y;
 
-        if (self.arrowDirection == MAFOverlayArrowDirectionDown ||  spaceAboveOrigin >= (layoutTargetSize.height+30) || spaceAboveOrigin > spaceBelowOrigin) {
-
+        if (self.arrowDirection == MAFOverlayArrowDirectionNoArrow) {
+            if (spaceAboveOrigin >= (layoutTargetSize.height+20) || spaceAboveOrigin > spaceBelowOrigin) {
+                self.arrowDirection = MAFOverlayArrowDirectionDown;
+            } else {
+                self.arrowDirection = MAFOverlayArrowDirectionUp;
+            }
+        }
+        
+        if (self.arrowDirection == MAFOverlayArrowDirectionDown) {
             layoutFrame.origin.y = MAX(minimumMargin.top,
                                        originForPresentation.y-(layoutTargetSize.height + marginFromOrigin));
             layoutFrame.size.height = MIN(layoutFrame.size.height,
