@@ -1,0 +1,11 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+target 'MAFOverlay', :exclusive => true do
+  pod "MAFOverlay", :path => "../"
+end
+
+target 'Tests', :exclusive => true do
+  pod "MAFOverlay", :path => "../"
+
+  
+end
