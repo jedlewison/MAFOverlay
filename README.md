@@ -9,8 +9,8 @@
 
 MAFOverlay brings popover-style overlay presentations to iPhone and iPad on iOS 7+.
 
-<img src="https://raw.githubusercontent.com/jedlewison/MAFOverlay/master/OverlayPortrait.png" width=180 height=320>
-<img src="https://raw.githubusercontent.com/jedlewison/MAFOverlay/master/OverlayLandscape.png" width=320 height=180>
+<img src="https://raw.githubusercontent.com/jedlewison/MAFOverlay/master/OverlayPortrait.png" width=160 height=240>
+<img src="https://raw.githubusercontent.com/jedlewison/MAFOverlay/master/OverlayLandscape.png" width=240 height=160>
 
 * MAFOverlay presents view controllers as overlays
 * Default setup should work for most cases—simply create a coordinator object for the presented view controller
