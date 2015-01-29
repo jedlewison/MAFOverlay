@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Ah1-88-i4m">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <scenes>
+        <!--MAFOverlay Example-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ASourceViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QoV-BQ-V14">
+                                <rect key="frame" x="247" y="74" width="48" height="30"/>
+                                <state key="normal" title="Simple">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="presentSimpleOverlay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XVh-CD-1je"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="QoV-BQ-V14" secondAttribute="centerX" id="Se6-wD-dY8"/>
+                            <constraint firstItem="QoV-BQ-V14" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="10" id="qHn-35-DSz"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems>
+                        <barButtonItem title="Segue Fade" id="yeK-NS-XNr">
+                            <connections>
+                                <segue destination="sAu-Ni-4kX" kind="presentation" identifier="segueWithCrossDissolve" id="rRS-8g-AuY"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="wPm-nX-biX"/>
+                        <barButtonItem title="Segue Default" id="png-ej-w8j">
+                            <connections>
+                                <segue destination="sAu-Ni-4kX" kind="presentation" id="jGv-M8-7VZ"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="yvC-XI-nzT"/>
+                        <barButtonItem title="Segue From" id="xJi-b1-1Ki">
+                            <connections>
+                                <segue destination="sAu-Ni-4kX" kind="presentation" identifier="segueWithSource" id="Fbn-8O-pdy"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="MAFOverlay Example" id="up2-ms-JZd">
+                        <barButtonItem key="leftBarButtonItem" title="Action" id="AHP-KZ-gal">
+                            <connections>
+                                <action selector="presentActionSheetController:" destination="BYZ-38-t0r" id="3gz-8z-UNc"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Simple" id="Vq4-3m-7IG">
+                            <connections>
+                                <action selector="presentSimpleOverlay:" destination="BYZ-38-t0r" id="5Dl-wR-Hgd"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1117" y="429"/>
+        </scene>
+        <!--Presented Sliding View Controller-->
+        <scene sceneID="Z8f-au-jsc">
+            <objects>
+                <viewController id="sAu-Ni-4kX" customClass="APresentedSlidingViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FLI-bm-JWu"/>
+                        <viewControllerLayoutGuide type="bottom" id="sP0-1u-Bmw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zTP-Ym-i6N">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.86274509799999999" green="0.039215686270000001" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jDF-a4-ERp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1938" y="1131"/>
+        </scene>
+        <!--Presented View Controller-->
+        <scene sceneID="UZ2-2U-kp2">
+            <objects>
+                <viewController storyboardIdentifier="APresentedViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zSm-xd-PNQ" customClass="APresentedViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6Fh-Pq-wg6"/>
+                        <viewControllerLayoutGuide type="bottom" id="OzT-ea-xSn"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="sFR-UB-zoB">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="22u-Td-Kh4">
+                                <rect key="frame" x="177" y="277" width="245" height="45.5"/>
+                                <string key="text">I'm an overlay view controller
+presented with MAFOverlay!</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.10000000000000001" green="0.80500000000000005" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="22u-Td-Kh4" secondAttribute="centerX" id="MGP-oy-Z5D"/>
+                            <constraint firstAttribute="centerY" secondItem="22u-Td-Kh4" secondAttribute="centerY" id="QFe-Te-xAJ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="myLabel" destination="22u-Td-Kh4" id="dig-fT-TGv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AdD-X6-lNf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1885" y="86"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="lUc-Rx-hoD">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="Ah1-88-i4m" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="2Sj-DJ-EFh">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Ujr-tA-25A">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="QaU-9E-McM"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xr9-aV-aWq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="305" y="1090"/>
+        </scene>
+    </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="rRS-8g-AuY"/>
+    </inferredMetricsTieBreakers>
+</document>
