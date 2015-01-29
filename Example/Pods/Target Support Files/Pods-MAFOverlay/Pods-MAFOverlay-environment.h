@@ -6,6 +6,12 @@
 // project.
 
 
+// MAFActionSheetController
+#define COCOAPODS_POD_AVAILABLE_MAFActionSheetController
+#define COCOAPODS_VERSION_MAJOR_MAFActionSheetController 0
+#define COCOAPODS_VERSION_MINOR_MAFActionSheetController 0
+#define COCOAPODS_VERSION_PATCH_MAFActionSheetController 3
+
 // MAFOverlay
 #define COCOAPODS_POD_AVAILABLE_MAFOverlay
 #define COCOAPODS_VERSION_MAJOR_MAFOverlay 0

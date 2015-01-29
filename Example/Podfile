@@ -2,6 +2,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 target 'MAFOverlay', :exclusive => true do
   pod "MAFOverlay", :path => "../"
+  pod "MAFActionSheetController"
 end
 
 target 'Tests', :exclusive => true do
