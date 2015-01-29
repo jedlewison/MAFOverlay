@@ -1,0 +1,14 @@
+PODS:
+  - MAFOverlay (0.1.0)
+
+DEPENDENCIES:
+  - MAFOverlay (from `../`)
+
+EXTERNAL SOURCES:
+  MAFOverlay:
+    :path: ../
+
+SPEC CHECKSUMS:
+  MAFOverlay: c9f78e44282e159e1008b7a7cd9aaa096aa6f27b
+
+COCOAPODS: 0.35.0
