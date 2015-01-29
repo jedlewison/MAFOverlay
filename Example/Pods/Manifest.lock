@@ -1,7 +1,7 @@
 PODS:
   - MAFActionSheetController (0.0.4):
     - MAFOverlay
-  - MAFOverlay (0.1.0)
+  - MAFOverlay (0.1.0.1)
 
 DEPENDENCIES:
   - MAFActionSheetController
@@ -13,6 +13,6 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   MAFActionSheetController: 6e678a4dc25de712660aecd37744a171626f60c9
-  MAFOverlay: 25dedf23ed5fee5a40970d265e20e1b35765217a
+  MAFOverlay: 9369ba232e54f626e171767ecc24f459e8483ae2
 
 COCOAPODS: 0.35.0

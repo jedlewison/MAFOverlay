@@ -14,7 +14,8 @@
 
 // MAFOverlay
 #define COCOAPODS_POD_AVAILABLE_MAFOverlay
-#define COCOAPODS_VERSION_MAJOR_MAFOverlay 0
-#define COCOAPODS_VERSION_MINOR_MAFOverlay 1
-#define COCOAPODS_VERSION_PATCH_MAFOverlay 0
+// This library does not follow semantic-versioning,
+// so we were not able to define version macros.
+// Please contact the author.
+// Version: 0.1.0.1.
 
