@@ -220,7 +220,15 @@ typedef NS_ENUM(NSUInteger, MAFOverlayArrowDirection) {
     return motionEffect;
 }
 
-#pragma mark - MAFOverlayPresentationDelegate
+#pragma mark - MAFOverlayPresentationContext
+
+- (id<MAFOverlayPresentationContext>)presentationContext {
+        if (self.animator) {
+            return self.animator;
+        } else {
+            return self.presentationController;
+        }
+}
 
 #pragma mark - legacy implementation
 
@@ -391,8 +399,8 @@ typedef NS_ENUM(NSUInteger, MAFOverlayArrowDirection) {
     return (CGSize) {19, 9};
 }
 
--(void)presentedOverlayViewController:(UIViewController *)controller willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-    [self.animator presentedOverlayViewController:controller willAnimateRotationToInterfaceOrientation:toInterfaceOrientation];
+-(void)performLayoutForRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+    [self.animator performLayoutForRotationToInterfaceOrientation:toInterfaceOrientation];
 }
 
 

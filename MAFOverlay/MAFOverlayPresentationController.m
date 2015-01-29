@@ -12,7 +12,6 @@
 
 @property (nonatomic, weak) UIView *decorationView;
 @property (nonatomic, weak) UIView *dimmingView;
-@property (nonatomic, weak) id<MAFOverlayPresentationDataSource> dataSource;
 
 @end
 

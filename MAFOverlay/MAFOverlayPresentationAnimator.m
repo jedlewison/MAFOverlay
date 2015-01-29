@@ -14,8 +14,6 @@
 @property (nonatomic, weak) UIView *decorationView;
 @property (nonatomic, weak) UIView *dimmingView;
 
-@property (nonatomic, weak) id<MAFOverlayPresentationDataSource> dataSource;
-
 @property (nonatomic, weak) UIViewController *presentedViewController;
 @property (nonatomic, weak) UIViewController *presentingViewController;
 
@@ -225,18 +223,18 @@
     [atts applyToPresentationContext:self];
 }
 
--(void)presentedOverlayViewController:(UIViewController *)controller willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+-(void)performLayoutForRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
     [self performLayout:toInterfaceOrientation];
-    NSArray *motionEffects = controller.view.motionEffects;
+    NSArray *motionEffects = self.presentedViewController.view.motionEffects;
     for (UIMotionEffect *effect in motionEffects) {
-        [controller.view removeMotionEffect:effect];
+        [self.presentedViewController.view removeMotionEffect:effect];
     }
     motionEffects = self.decorationView.motionEffects;
     for (UIMotionEffect *effect in motionEffects) {
         [self.decorationView removeMotionEffect:effect];
     }
 
-    [controller.view addMotionEffect:[self.dataSource motionEffectGroup:self]];
+    [self.presentedViewController.view addMotionEffect:[self.dataSource motionEffectGroup:self]];
     [self.decorationView addMotionEffect:[self.dataSource motionEffectGroup:self]];
 }
 
