@@ -1,1 +1,1 @@
-../../../../../../MAFActionSheetController/MAFActionSheetController/MAFActionSheetTableViewCell.h
+../../../MAFActionSheetController/MAFActionSheetController/MAFActionSheetTableViewCell.h
