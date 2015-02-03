@@ -25,6 +25,7 @@
     } else {
         [overlayViewController.overlayPresentationCoordinator setSourceView:sender];
     }
+    
     [self presentViewController:overlayViewController animated:YES completion:NULL];
 }
 
