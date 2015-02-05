@@ -76,7 +76,7 @@
         [actionSheetController.overlayPresentationCoordinator setSourceView:sender];
     }
     
-    [self presentViewController:actionSheetController animated:NO
+    [self presentViewController:actionSheetController animated:YES
                      completion:nil];
 }
 
