@@ -19,7 +19,7 @@
 
 +(instancetype)overlayPresentationControllerWithDataSource:(id<MAFOverlayPresentationDataSource>)dataSource
                                    presentedViewController:(UIViewController *)presentedViewController{
-
+    
     MAFOverlayPresentationController *controller = [[self alloc] initWithPresentedViewController:presentedViewController presentingViewController:nil];
     presentedViewController.modalPresentationStyle = UIModalPresentationCustom;
     controller.dataSource = dataSource;
@@ -37,7 +37,7 @@
         MAFOverlayPresentationLayoutAttributes *presentedAtts = [self.dataSource presentationLayoutAttributesForContext:self];
         [presentedAtts applyToPresentationContext:self];
         self.dimmingView.frame = self.containerView.bounds;
-
+        
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         
     }];
@@ -53,21 +53,21 @@
     if ([self.presentingViewController respondsToSelector:@selector(presentationContextWillPresent:)]) {
         [self.presentingViewController performSelector:@selector(presentationContextWillPresent:) withObject:self];
     }
-
+    
     
     self.presentedView.autoresizingMask = UIViewAutoresizingNone;
-
+    
     self.containerView.backgroundColor = [UIColor clearColor];
-
+    
     [self.presentedView addMotionEffect:[self.dataSource motionEffectGroup:self]];
-
+    
     [UIView performWithoutAnimation:^{
         [[self.dataSource initialPresentationLayoutAttributesForContext:self] applyToPresentationContext:self];
     }];
-
+    
     id <UIViewControllerTransitionCoordinator> transitionCoordinator =
     [[self presentingViewController] transitionCoordinator];
-
+    
     [transitionCoordinator animateAlongsideTransition:
      ^(id<UIViewControllerTransitionCoordinatorContext> context) {
          MAFOverlayPresentationLayoutAttributes *presentedAtts = [self.dataSource presentationLayoutAttributesForContext:self];
@@ -122,7 +122,7 @@
     if ([self.presentingViewController respondsToSelector:@selector(presentationContextDidDismiss:)]) {
         [self.presentingViewController performSelector:@selector(presentationContextDidDismiss:) withObject:self];
     }
-
+    
 }
 
 -(UIView *)dimmingView {
@@ -141,7 +141,7 @@
         [self.containerView addSubview:decorationView];
         _decorationView = decorationView;
         [_decorationView addMotionEffect:[self.dataSource motionEffectGroup:self]];
-
+        
     }
     return _decorationView;
 }
@@ -159,15 +159,15 @@
 }
 
 -(void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
-
+    
     [self.containerView addSubview:self.presentedViewController.view];
-
+    
     [UIView animateWithDuration:[self transitionDuration:transitionContext]
                           delay:0.f
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
-
-
+                         
+                         
                      } completion:^(BOOL finished) {
                          [transitionContext completeTransition:YES];
                      }];

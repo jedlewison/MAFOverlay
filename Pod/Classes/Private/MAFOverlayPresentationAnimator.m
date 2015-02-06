@@ -42,9 +42,6 @@
 }
 
 -(id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
-    if (dismissed != self.presentedViewController) {
-        
-    }
     return self;
 }
 
@@ -65,7 +62,7 @@
         if ([self.presentingViewController respondsToSelector:@selector(presentationContextWillPresent:)]) {
             [self.presentingViewController performSelector:@selector(presentationContextWillPresent:) withObject:self];
         }
-
+        
         [self performInitialLayoutIfNeeded];
         
     } else if (isBeingDismissed) {
@@ -77,7 +74,7 @@
             [self.presentingViewController performSelector:@selector(presentationContextWillDismiss:) withObject:self];
         }
         
-
+        
     }
     
     NSTimeInterval animationDuration = [self transitionDuration:transitionContext];
@@ -94,7 +91,7 @@
                              self.presentedViewController.view.alpha = 1;
                              [self.presentedViewController.view setTintAdjustmentMode:UIViewTintAdjustmentModeAutomatic];
                              [self.presentingViewController.view setTintAdjustmentMode:UIViewTintAdjustmentModeDimmed];
-
+                             
                          } else if ([self.presentedViewController isBeingDismissed]) {
                              
                              [self performFinalLayoutIfNeeded];
@@ -125,7 +122,7 @@
                              if ([self.presentingViewController respondsToSelector:@selector(presentationContextDidDismiss:)]) {
                                  [self.presentingViewController performSelector:@selector(presentationContextDidDismiss:) withObject:self];
                              }
-
+                             
                          }
                      }];
 }
@@ -150,57 +147,57 @@
     
     // Background view
     
-
-
+    
+    
     [self.containerView addSubview:self.presentedViewController.view];
     
     
     [self.presentedViewController.view addMotionEffect:[self.dataSource motionEffectGroup:self]];
-
+    
     [UIView performWithoutAnimation:^{
         [[self.dataSource initialPresentationLayoutAttributesForContext:self] applyToPresentationContext:self];
     }];
-
+    
 }
 
 - (MAFOverlayPresentationLayoutAttributes *)getPresentationLayoutAttributesForOrientation:(UIInterfaceOrientation)interfaceOrientation fromAttributes:(MAFOverlayPresentationLayoutAttributes *)atts {
-
+    
     if (interfaceOrientation == UIInterfaceOrientationPortrait) {
         return atts;
     }
-
+    
     CGRect newPresentedFrame = [self adjustRect:atts.frame forOrientation:interfaceOrientation containingFrame:self.containerView.bounds];
     CGRect newDecorationFrame = [self adjustRect:atts.decorationViewFrame forOrientation:interfaceOrientation containingFrame:self.containerView.bounds];
-
+    
     MAFOverlayPresentationLayoutAttributes *newAttributes = [atts copy];
     newAttributes.frame = newPresentedFrame;
     newAttributes.decorationViewFrame = newDecorationFrame;
-
+    
     return newAttributes;
 }
 
 - (CGRect)adjustRect:(CGRect)inputRect forOrientation:(UIInterfaceOrientation)interfaceOrientation containingFrame:(CGRect)containingFrame {
-
+    
     CGRect adjustedRect = inputRect;
-
+    
     switch (interfaceOrientation) {
         case UIInterfaceOrientationPortrait:
             break;
-
+            
         case UIInterfaceOrientationPortraitUpsideDown:
             adjustedRect.origin.x = containingFrame.size.width - (inputRect.size.width + inputRect.origin.x);
             adjustedRect.origin.y = containingFrame.size.height - (inputRect.size.height + inputRect.origin.y);
-
+            
             break;
-
+            
         case UIInterfaceOrientationLandscapeLeft:
             adjustedRect.origin.x = inputRect.origin.y;
             adjustedRect.origin.y = containingFrame.size.height - (inputRect.size.width + inputRect.origin.x);
             adjustedRect.size.width = inputRect.size.height;
             adjustedRect.size.height = inputRect.size.width;
-
+            
             break;
-
+            
         case UIInterfaceOrientationLandscapeRight:
             adjustedRect.origin.x = containingFrame.size.width - (inputRect.size.height + inputRect.origin.y);
             adjustedRect.origin.y = inputRect.origin.x;
@@ -211,14 +208,14 @@
         default:
             break;
     }
-
+    
     return adjustedRect;
-
+    
 }
 
 - (void)performLayout:(UIInterfaceOrientation)interfaceOrientation {
-     self.presentedViewController.view.autoresizingMask = UIViewAutoresizingNone;
-
+    self.presentedViewController.view.autoresizingMask = UIViewAutoresizingNone;
+    
     MAFOverlayPresentationLayoutAttributes *atts = [self.dataSource presentationLayoutAttributesForContext:self];
     [atts applyToPresentationContext:self];
 }
@@ -233,7 +230,7 @@
     for (UIMotionEffect *effect in motionEffects) {
         [self.decorationView removeMotionEffect:effect];
     }
-
+    
     [self.presentedViewController.view addMotionEffect:[self.dataSource motionEffectGroup:self]];
     [self.decorationView addMotionEffect:[self.dataSource motionEffectGroup:self]];
 }
@@ -254,7 +251,7 @@
         [self.containerView addSubview:decorationView];
         _decorationView = decorationView;
         [_decorationView addMotionEffect:[self.dataSource motionEffectGroup:self]];
-
+        
     }
     return _decorationView;
 }

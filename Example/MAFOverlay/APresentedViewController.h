@@ -12,6 +12,4 @@
 
 @interface APresentedViewController : UIViewController
 
-@property (nonatomic, readonly) MAFOverlayPresentationCoordinator *overlayPresentationCoordinator;
-
 @end

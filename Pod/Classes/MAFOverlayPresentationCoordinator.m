@@ -7,8 +7,9 @@
 //
 
 #import "MAFOverlayPresentationCoordinator.h"
-#import "MAFOverlayPresentationController.h"
-#import "MAFOverlayPresentationAnimator.h"
+#import <MAFOverlay/MAFOverlayPresentationDataSource.h>
+#import <MAFOverlay/MAFOverlayPresentationController.h>
+#import <MAFOverlay/MAFOverlayPresentationAnimator.h>
 
 typedef NS_ENUM(NSUInteger, MAFOverlayArrowDirection) {
     MAFOverlayArrowDirectionNoArrow,
@@ -18,7 +19,7 @@ typedef NS_ENUM(NSUInteger, MAFOverlayArrowDirection) {
     MAFOverlayArrowDirectionRight
 };
 
-@interface MAFOverlayPresentationCoordinator () <UIViewControllerTransitioningDelegate>
+@interface MAFOverlayPresentationCoordinator () <UIViewControllerTransitioningDelegate, MAFOverlayPresentationDataSource, MAFOverlayPresentationContext>
 
 @property (nonatomic) MAFOverlayPresentationAnimator *animator;
 @property (nonatomic, weak) MAFOverlayPresentationController *presentationController;
@@ -35,7 +36,7 @@ typedef NS_ENUM(NSUInteger, MAFOverlayArrowDirection) {
     if (!presentedViewController) {
         NSLog(@"Warning: You did not provide a presented view controller to MAFOverlayPresentationCoordinator");
     }
-
+    
     MAFOverlayPresentationCoordinator *overlayPresentationCoordinator = [[MAFOverlayPresentationCoordinator alloc] init];
     overlayPresentationCoordinator.presentedViewController = presentedViewController;
     presentedViewController.modalPresentationStyle = UIModalPresentationCustom;
@@ -84,31 +85,68 @@ typedef NS_ENUM(NSUInteger, MAFOverlayArrowDirection) {
     return _animator;
 }
 
+#pragma mark - MAFOverlayPresentationContext
+
+-(UIViewController *)presentedViewController {
+    return [self.presentationContext presentedViewController];
+}
+
+-(UIViewController *)presentingViewController {
+    return [self.presentationContext presentingViewController];
+}
+
+-(UIView *)decorationView {
+    return [self.presentationContext decorationView];
+}
+
+-(UIView *)dimmingView {
+    return [self.presentationContext dimmingView];
+}
+
+-(UIView *)containerView {
+    return [self.presentationContext containerView];
+}
+
+-(id<MAFOverlayPresentationDataSource>)dataSource {
+    return self;
+}
+
 #pragma mark - MAFOverlayPresentationDataSource
 
 -(MAFOverlayPresentationLayoutAttributes *)presentationLayoutAttributesForContext:(id<MAFOverlayPresentationContext>)presentationContext {
+    
+    if (presentationContext != self && [self.customDataSource respondsToSelector:@selector(presentationLayoutAttributesForContext:)]) {
+        return [self.customDataSource presentationLayoutAttributesForContext:self];
+    }
+
     UIInterfaceOrientation effectiveOrientation = [presentationContext presentedViewController].interfaceOrientation;
     if ([UIPresentationController class]) {
         effectiveOrientation = UIInterfaceOrientationPortrait;
     }
     MAFOverlayPresentationLayoutAttributes *atts = [self attsForPreferredContentSize:[presentationContext presentedViewController].preferredContentSize
-                                        containerView:[presentationContext containerView]
-                                 interfaceOrientation:effectiveOrientation];
-
+                                                                       containerView:[presentationContext containerView]
+                                                                interfaceOrientation:effectiveOrientation];
+    
     atts.alpha = 1.f;
     atts.transform = [presentationContext presentedViewController].view.transform;
+    
     return atts;
 }
 
 -(MAFOverlayPresentationLayoutAttributes *)initialPresentationLayoutAttributesForContext:(id<MAFOverlayPresentationContext>)presentationContext {
+    
+    if (presentationContext != self && [self.customDataSource respondsToSelector:@selector(initialPresentationLayoutAttributesForContext:)]) {
+        return [self.customDataSource initialPresentationLayoutAttributesForContext:self];
+    }
 
+    
     MAFOverlayPresentationLayoutAttributes *atts = [self presentationLayoutAttributesForContext:presentationContext];
-
+    
     if ([presentationContext presentedViewController].modalTransitionStyle == UIModalTransitionStyleCoverVertical) {
         CGFloat originYOffset = [presentationContext containerView].bounds.size.height - atts.frame.origin.y;
         CGRect frame = atts.frame;
         frame.origin.y += originYOffset;
-
+        
         atts.frame = frame;
         CGRect decorationViewFrame = atts.decorationViewFrame;
         decorationViewFrame.origin.y += originYOffset;
@@ -117,15 +155,20 @@ typedef NS_ENUM(NSUInteger, MAFOverlayArrowDirection) {
         atts.alpha = 0.f;
     }
     atts.dimmingViewAlpha = 0.f;
-
+    
     return atts;
 }
 
 
 -(MAFOverlayPresentationLayoutAttributes *)dismissedPresentationLayoutAttributesForContext:(id<MAFOverlayPresentationContext>)presentationContext {
+    
+    if (presentationContext != self && [self.customDataSource respondsToSelector:@selector(dismissedPresentationLayoutAttributesForContext:)]) {
+        return [self.customDataSource dismissedPresentationLayoutAttributesForContext:self];
+    }
 
+    
     MAFOverlayPresentationLayoutAttributes *atts = [self presentationLayoutAttributesForContext:presentationContext];
-
+    
     if ([presentationContext presentedViewController].modalTransitionStyle == UIModalTransitionStyleCoverVertical) {
         CGFloat originYOffset = [presentationContext containerView].bounds.size.height - atts.frame.origin.y;
         CGRect frame = atts.frame;
@@ -134,7 +177,7 @@ typedef NS_ENUM(NSUInteger, MAFOverlayArrowDirection) {
         CGRect decorationViewFrame = atts.decorationViewFrame;
         decorationViewFrame.origin.y += originYOffset;
         atts.decorationViewFrame = decorationViewFrame;
-
+        
     } else if ([presentationContext presentedViewController].modalTransitionStyle == UIModalTransitionStyleCrossDissolve) {
         atts.alpha = 0.f;
     }
@@ -145,6 +188,12 @@ typedef NS_ENUM(NSUInteger, MAFOverlayArrowDirection) {
 }
 
 -(UIView *)containerDimmingViewInOverlayPresentationContext:(id<MAFOverlayPresentationContext>)presentationContext {
+    
+    if (presentationContext != self && [self.customDataSource respondsToSelector:@selector(containerDimmingViewInOverlayPresentationContext:)]) {
+        return [self.customDataSource containerDimmingViewInOverlayPresentationContext:self];
+    }
+
+    
     UIView *dimmingView = [[UIView alloc] init];
     dimmingView.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.4f];
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didReceiveTap:)];
@@ -154,6 +203,75 @@ typedef NS_ENUM(NSUInteger, MAFOverlayArrowDirection) {
 }
 
 
+-(UIView *)decorationView:(id<MAFOverlayPresentationContext>)presentationContext {
+    
+    if (presentationContext != self && [self.customDataSource respondsToSelector:@selector(decorationView:)]) {
+        return [self.customDataSource decorationView:self];
+    }
+    
+    return [self createArrowViewIfNeeded:[presentationContext presentedViewController].view.backgroundColor];
+}
+
+-(UIMotionEffectGroup *)motionEffectGroup:(id<MAFOverlayPresentationContext>)presentationContext {
+    
+    if (presentationContext != self && [self.customDataSource respondsToSelector:@selector(motionEffectGroup:)]) {
+        return [self.customDataSource motionEffectGroup:self];
+    }
+    
+    NSString *xAxisKeyPath = @"center.x";
+    NSString *yAxisKeyPath = @"center.y";
+    CGFloat minXValue = -12.f;
+    CGFloat maxXValue = 12.f;
+    CGFloat minYValue = -12.f;
+    CGFloat maxYValue = 12.f;
+    
+    UIInterfaceOrientation effectiveOrientation = [presentationContext presentedViewController].interfaceOrientation;
+    if ([UIPresentationController class]) {
+        // On iOS 8, you don't need to do anything special based on interface orientation to make the motion effects look right
+        effectiveOrientation = UIInterfaceOrientationPortrait;
+    }
+    if (![UIPresentationController class] && presentationContext.presentedViewController.interfaceOrientation != UIInterfaceOrientationPortrait) {
+        
+        switch (effectiveOrientation) {
+            case UIInterfaceOrientationPortraitUpsideDown:
+                minYValue = 12.f;
+                maxYValue = -12.f;
+                
+                break;
+            case UIInterfaceOrientationLandscapeLeft:
+                xAxisKeyPath = @"center.y";
+                yAxisKeyPath = @"center.x";
+                minXValue = 12.f;
+                maxXValue = -12.f;
+                
+                break;
+            case UIInterfaceOrientationLandscapeRight:
+                xAxisKeyPath = @"center.y";
+                yAxisKeyPath = @"center.x";
+                minYValue = 12.f;
+                maxYValue = -12.f;
+                
+                break;
+                
+            default:
+                break;
+        }
+    }
+    UIInterpolatingMotionEffect *xAxis = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:xAxisKeyPath type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+    xAxis.minimumRelativeValue = @(minXValue);
+    xAxis.maximumRelativeValue = @(maxXValue);
+    
+    UIInterpolatingMotionEffect *yAxis = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:yAxisKeyPath type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+    yAxis.minimumRelativeValue = @(minYValue);
+    yAxis.maximumRelativeValue = @(maxYValue);
+    
+    UIMotionEffectGroup *motionEffect = [[UIMotionEffectGroup alloc] init];
+    motionEffect.motionEffects = @[xAxis, yAxis];
+    return motionEffect;
+}
+
+#pragma mark - Event handling related to data source
+
 -(void)didReceiveTap:(UITapGestureRecognizer *)sender
 {
     if (sender.state == UIGestureRecognizerStateEnded) {
@@ -162,82 +280,26 @@ typedef NS_ENUM(NSUInteger, MAFOverlayArrowDirection) {
     }
 }
 
--(UIView *)decorationView:(id<MAFOverlayPresentationContext>)presentationContext {
-    return [self createArrowViewIfNeeded:[presentationContext presentedViewController].view.backgroundColor];
-}
 
--(UIMotionEffectGroup *)motionEffectGroup:(id<MAFOverlayPresentationContext>)presentationContext {
-
-    NSString *xAxisKeyPath = @"center.x";
-    NSString *yAxisKeyPath = @"center.y";
-    CGFloat minXValue = -12.f;
-    CGFloat maxXValue = 12.f;
-    CGFloat minYValue = -12.f;
-    CGFloat maxYValue = 12.f;
-
-    UIInterfaceOrientation effectiveOrientation = [presentationContext presentedViewController].interfaceOrientation;
-    if ([UIPresentationController class]) {
-        // On iOS 8, you don't need to do anything special based on interface orientation to make the motion effects look right
-        effectiveOrientation = UIInterfaceOrientationPortrait;
-    }
-    if (![UIPresentationController class] && presentationContext.presentedViewController.interfaceOrientation != UIInterfaceOrientationPortrait) {
-
-        switch (effectiveOrientation) {
-            case UIInterfaceOrientationPortraitUpsideDown:
-                 minYValue = 12.f;
-                 maxYValue = -12.f;
-
-                break;
-            case UIInterfaceOrientationLandscapeLeft:
-                xAxisKeyPath = @"center.y";
-                yAxisKeyPath = @"center.x";
-                minXValue = 12.f;
-                maxXValue = -12.f;
-
-                break;
-            case UIInterfaceOrientationLandscapeRight:
-                xAxisKeyPath = @"center.y";
-                yAxisKeyPath = @"center.x";
-                 minYValue = 12.f;
-                 maxYValue = -12.f;
-
-                break;
-
-            default:
-                break;
-        }
-    }
-    UIInterpolatingMotionEffect *xAxis = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:xAxisKeyPath type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
-    xAxis.minimumRelativeValue = @(minXValue);
-    xAxis.maximumRelativeValue = @(maxXValue);
-
-    UIInterpolatingMotionEffect *yAxis = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:yAxisKeyPath type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
-    yAxis.minimumRelativeValue = @(minYValue);
-    yAxis.maximumRelativeValue = @(maxYValue);
-
-    UIMotionEffectGroup *motionEffect = [[UIMotionEffectGroup alloc] init];
-    motionEffect.motionEffects = @[xAxis, yAxis];
-    return motionEffect;
-}
 
 #pragma mark - MAFOverlayPresentationContext
 
 - (id<MAFOverlayPresentationContext>)presentationContext {
-        if (self.animator) {
-            return self.animator;
-        } else {
-            return self.presentationController;
-        }
+    if (self.animator) {
+        return self.animator;
+    } else {
+        return self.presentationController;
+    }
 }
 
 #pragma mark - legacy implementation
 
 -(MAFOverlayPresentationLayoutAttributes *)attsForPreferredContentSize:(CGSize)preferredContentSize
-                        containerView:(UIView *)containerView
-                 interfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-
+                                                         containerView:(UIView *)containerView
+                                                  interfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    
     MAFOverlayPresentationLayoutAttributes *atts = [[MAFOverlayPresentationLayoutAttributes alloc] init];
-
+    
     CGRect layoutContainerRect = containerView.frame;
     layoutContainerRect.origin = CGPointZero;
     if (UIInterfaceOrientationIsLandscape(interfaceOrientation)) {
@@ -249,7 +311,7 @@ typedef NS_ENUM(NSUInteger, MAFOverlayArrowDirection) {
     atts.minimumMargin = self.minimumContainerEdgeInsets;
     UIEdgeInsets minimumMargin = atts.minimumMargin;
     CGSize layoutTargetSize = preferredContentSize;
-
+    
     if (CGSizeEqualToSize(CGSizeZero, layoutTargetSize)) {
         if (layoutTargetSize.height == UIViewNoIntrinsicMetric) {
             NSLog(@"No preferred content size.width or intrinsic content size.width");
@@ -257,29 +319,29 @@ typedef NS_ENUM(NSUInteger, MAFOverlayArrowDirection) {
         if (layoutTargetSize.width == UIViewNoIntrinsicMetric) {
             NSLog(@"No preferred content size.height or intrinsic content size.height");
         }
-
+        
         atts.frame = CGRectZero;
         return atts;
     }
-
+    
     CGPoint originForPresentation = [self originForPresentationInContainerView:containerView
                                                           interfaceOrientation:interfaceOrientation
                                                            layoutContainerRect:layoutContainerRect];
-
+    
     CGRect layoutFrame;
-
+    
     if (self.sourceView) {
-
+        
         CGFloat marginFromOrigin = 20.f;
-
+        
         layoutFrame.origin.x = originForPresentation.x-layoutTargetSize.width/2.f;
         layoutFrame.size = layoutTargetSize;
-
+        
         originForPresentation.y = MAX(originForPresentation.y, MIN(MAX(originForPresentation.y, minimumMargin.top), layoutContainerRect.size.height-(layoutFrame.size.height+minimumMargin.bottom)));
-
+        
         CGFloat spaceAboveOrigin = originForPresentation.y - minimumMargin.top;
         CGFloat spaceBelowOrigin = (layoutContainerRect.size.height - minimumMargin.bottom) - originForPresentation.y;
-
+        
         if (self.arrowDirection == MAFOverlayArrowDirectionNoArrow) {
             if (spaceAboveOrigin >= (layoutTargetSize.height+20) || spaceAboveOrigin > spaceBelowOrigin) {
                 self.arrowDirection = MAFOverlayArrowDirectionDown;
@@ -294,15 +356,15 @@ typedef NS_ENUM(NSUInteger, MAFOverlayArrowDirection) {
             layoutFrame.size.height = MIN(layoutFrame.size.height,
                                           originForPresentation.y - marginFromOrigin - layoutFrame.origin.y);
             self.arrowDirection = MAFOverlayArrowDirectionDown;
-
+            
         } else {
-
+            
             layoutFrame.origin.y = originForPresentation.y + marginFromOrigin;
             layoutFrame.size.height = MIN(layoutFrame.size.height, CGRectGetMaxY(layoutContainerRect)-minimumMargin.bottom-layoutFrame.origin.y);
             self.arrowDirection = MAFOverlayArrowDirectionUp;
-
+            
         }
-
+        
         if (CGRectGetMaxX(layoutFrame) > (CGRectGetMaxX(layoutContainerRect)-minimumMargin.right)) {
             layoutFrame.origin.x -= CGRectGetMaxX(layoutFrame)-CGRectGetMaxX(layoutContainerRect);
             layoutFrame.origin.x -= minimumMargin.right;
@@ -311,24 +373,24 @@ typedef NS_ENUM(NSUInteger, MAFOverlayArrowDirection) {
                 layoutFrame.origin.x = minimumMargin.left;
             }
         }
-
+        
     } else {
-
+        
         layoutFrame.origin.x = MAX(MAX(minimumMargin.left, minimumMargin.right), CGRectGetMidX(layoutContainerRect)-layoutTargetSize.width/2.f);
         layoutFrame.origin.y = MAX(MAX(minimumMargin.top, minimumMargin.bottom), CGRectGetMidY(layoutContainerRect)-layoutTargetSize.height/2.f);
         layoutFrame.size.width = layoutContainerRect.size.width - 2.f*layoutFrame.origin.x;
         layoutFrame.size.height = layoutContainerRect.size.height - 2.f*layoutFrame.origin.y;
-
+        
         CGSize leadingPadding = (CGSize) {
             layoutFrame.origin.x - self.minimumContainerEdgeInsets.left,
             layoutFrame.origin.y - self.minimumContainerEdgeInsets.top
         };
-
+        
         CGSize trailingPadding = (CGSize) {
             layoutFrame.origin.x - self.minimumContainerEdgeInsets.right,
             layoutFrame.origin.y - self.minimumContainerEdgeInsets.bottom
         };
-
+        
         if (self.anchorPoint.x < 0.5f) {
             layoutFrame.origin.x -= leadingPadding.width * (0.5f - self.anchorPoint.x) * 2.f;
         } else if (self.anchorPoint.x > 0.5f ) {
@@ -338,12 +400,12 @@ typedef NS_ENUM(NSUInteger, MAFOverlayArrowDirection) {
             layoutFrame.origin.y -= leadingPadding.height * (0.5f - self.anchorPoint.y) * 2.f;
         } else if (self.anchorPoint.y > 0.5f ) {
             layoutFrame.origin.y += trailingPadding.height * (self.anchorPoint.y-0.5f) * 2.f;
-
+            
         }
-
+        
         layoutFrame.origin.x = round(layoutFrame.origin.x * [UIScreen mainScreen].scale)/[UIScreen mainScreen].scale;
         layoutFrame.origin.y = round(layoutFrame.origin.y * [UIScreen mainScreen].scale)/[UIScreen mainScreen].scale;
-
+        
     }
     
     //Adjust for minimum margins horizontally
@@ -361,13 +423,13 @@ typedef NS_ENUM(NSUInteger, MAFOverlayArrowDirection) {
             layoutFrame.size.width -= rightOverhang;
         }
     }
-
+    
     atts.frame = layoutFrame;
-
+    
     if (self.sourceView == nil) {
         atts.decorationViewFrame = CGRectZero;
     } else {
-
+        
         CGFloat minX = CGRectGetMinX(atts.frame)+[self sizeForArrowView].width/2.f;
         CGFloat maxX = CGRectGetMaxX(atts.frame)-[self sizeForArrowView].width/2.f;
         
@@ -381,17 +443,17 @@ typedef NS_ENUM(NSUInteger, MAFOverlayArrowDirection) {
             decorationViewFrame.origin.x = originForPresentation.x;
         }
         decorationViewFrame.origin.x = MAX(atts.frame.origin.x + atts.cornerRadius - (1.f+1.f/[UIScreen mainScreen].scale), originForPresentation.x - [self sizeForArrowView].width/2.f);
-
+        
         if (self.arrowDirection == MAFOverlayArrowDirectionUp) {
             decorationViewFrame.origin.y = atts.frame.origin.y - [self sizeForArrowView].height;
         } else if (self.arrowDirection == MAFOverlayArrowDirectionDown) {
             decorationViewFrame.origin.y = atts.frame.origin.y + atts.frame.size.height;
         }
-
+        
         atts.decorationViewFrame = decorationViewFrame;
-
+        
     }
-
+    
     return atts;
 }
 
@@ -408,23 +470,23 @@ typedef NS_ENUM(NSUInteger, MAFOverlayArrowDirection) {
                           interfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
                            layoutContainerRect:(CGRect)layoutContainerRect
 {
-
+    
     if ([self.sourceBarButtonItem respondsToSelector:@selector(view)]) {
         UIView *view = [(id)self.sourceBarButtonItem view];
         if ([view isKindOfClass:[UIView class]]) {
             self.sourceView = view;
         }
     }
-
+    
     if (!self.sourceView) {
         self.arrowDirection = MAFOverlayArrowDirectionNoArrow;
         return CGPointZero;
     }
-
+    
     CGPoint originForPresentation = [containerView convertPoint:(CGPoint){CGRectGetMidX(self.sourceView.bounds),
         CGRectGetMidY(self.sourceView.bounds)}
                                                        fromView:self.sourceView];
-
+    
     switch (interfaceOrientation) {
         case UIInterfaceOrientationPortraitUpsideDown:
             originForPresentation = (CGPoint){
@@ -432,28 +494,28 @@ typedef NS_ENUM(NSUInteger, MAFOverlayArrowDirection) {
                 layoutContainerRect.size.height - originForPresentation.y
             };
             break;
-
+            
         case UIInterfaceOrientationLandscapeLeft:
             originForPresentation = (CGPoint){
                 layoutContainerRect.size.width - originForPresentation.y,
                 originForPresentation.x
             };
             break;
-
+            
         case UIInterfaceOrientationLandscapeRight:
             originForPresentation = (CGPoint){
                 originForPresentation.y,
                 layoutContainerRect.size.height - originForPresentation.x
             };
-
+            
             break;
-
+            
         default:
             break;
     }
-
+    
     return originForPresentation;
-
+    
 }
 
 -(UIView *)createArrowViewIfNeeded:(UIColor *)backgroundColor
@@ -461,68 +523,68 @@ typedef NS_ENUM(NSUInteger, MAFOverlayArrowDirection) {
     if (self.arrowDirection == MAFOverlayArrowDirectionNoArrow) {
         return nil;
     }
-
+    
     if (!self.arrowView) {
-
-    CGRect frame = CGRectZero;
-    frame.size = [self sizeForArrowView];
-
-    UIImageView *arrowPointerView = [[UIImageView alloc] initWithFrame:frame];
-
-    UIGraphicsBeginImageContextWithOptions(arrowPointerView.frame.size, NO, [[UIScreen mainScreen] scale]);
-    [backgroundColor setFill];
-    UIBezierPath *bezierPath = [UIBezierPath bezierPath];
-
-
-    CGPoint startingPoint = CGPointMake(0, arrowPointerView.frame.size.height);
-    CGPoint arrowTipPoint = CGPointMake(arrowPointerView.frame.size.width/2.f, 0.f);
+        
+        CGRect frame = CGRectZero;
+        frame.size = [self sizeForArrowView];
+        
+        UIImageView *arrowPointerView = [[UIImageView alloc] initWithFrame:frame];
+        
+        UIGraphicsBeginImageContextWithOptions(arrowPointerView.frame.size, NO, [[UIScreen mainScreen] scale]);
+        [backgroundColor setFill];
+        UIBezierPath *bezierPath = [UIBezierPath bezierPath];
+        
+        
+        CGPoint startingPoint = CGPointMake(0, arrowPointerView.frame.size.height);
+        CGPoint arrowTipPoint = CGPointMake(arrowPointerView.frame.size.width/2.f, 0.f);
         CGFloat pixelPoint = 1.f/[UIScreen mainScreen].scale;
-
-    CGPoint secondPoint = CGPointMake(arrowTipPoint.x-(1.f), arrowTipPoint.y+pixelPoint);
-    CGPoint controlPointForSecondPoint = CGPointMake(arrowPointerView.frame.size.width * 1.f/6.f,arrowPointerView.frame.size.height);
-    CGPoint thirdPoint = CGPointMake(arrowTipPoint.x+(1.f), arrowTipPoint.y+pixelPoint);
-    CGPoint fourthPoint = CGPointMake(arrowPointerView.frame.size.width, arrowPointerView.frame.size.height);
-    CGPoint controlPointForFourthPoint = CGPointMake(arrowPointerView.frame.size.width * 5.f/6.f,arrowPointerView.frame.size.height);
-
-    if (self.arrowDirection == MAFOverlayArrowDirectionDown) {
-        startingPoint.y = 0;
-        arrowTipPoint.y = arrowPointerView.frame.size.height;
-        secondPoint.y = arrowTipPoint.y - 1.f;
-        controlPointForSecondPoint.y = 0.f;
-        thirdPoint.y = secondPoint.y;
-        fourthPoint.y = 0.f;
-        controlPointForFourthPoint.y = 0.f;
-    }
-    [bezierPath moveToPoint:startingPoint];
-
-    [bezierPath addQuadCurveToPoint:secondPoint
-                       controlPoint:controlPointForSecondPoint];
-
-    [bezierPath addQuadCurveToPoint:thirdPoint
-                       controlPoint:arrowTipPoint];
-
+        
+        CGPoint secondPoint = CGPointMake(arrowTipPoint.x-(1.f), arrowTipPoint.y+pixelPoint);
+        CGPoint controlPointForSecondPoint = CGPointMake(arrowPointerView.frame.size.width * 1.f/6.f,arrowPointerView.frame.size.height);
+        CGPoint thirdPoint = CGPointMake(arrowTipPoint.x+(1.f), arrowTipPoint.y+pixelPoint);
+        CGPoint fourthPoint = CGPointMake(arrowPointerView.frame.size.width, arrowPointerView.frame.size.height);
+        CGPoint controlPointForFourthPoint = CGPointMake(arrowPointerView.frame.size.width * 5.f/6.f,arrowPointerView.frame.size.height);
+        
+        if (self.arrowDirection == MAFOverlayArrowDirectionDown) {
+            startingPoint.y = 0;
+            arrowTipPoint.y = arrowPointerView.frame.size.height;
+            secondPoint.y = arrowTipPoint.y - 1.f;
+            controlPointForSecondPoint.y = 0.f;
+            thirdPoint.y = secondPoint.y;
+            fourthPoint.y = 0.f;
+            controlPointForFourthPoint.y = 0.f;
+        }
+        [bezierPath moveToPoint:startingPoint];
+        
+        [bezierPath addQuadCurveToPoint:secondPoint
+                           controlPoint:controlPointForSecondPoint];
+        
+        [bezierPath addQuadCurveToPoint:thirdPoint
+                           controlPoint:arrowTipPoint];
+        
         [bezierPath addQuadCurveToPoint:fourthPoint
-                       controlPoint:controlPointForFourthPoint];
-
-
-    [bezierPath closePath];
-
-    if (backgroundColor == [UIColor clearColor]) {
-        backgroundColor = [UIColor whiteColor];
-    }
-
-    [backgroundColor setFill];
-
-    [bezierPath fill];
-    arrowPointerView.image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-
-    arrowPointerView.autoresizingMask = UIViewAutoresizingNone;
+                           controlPoint:controlPointForFourthPoint];
+        
+        
+        [bezierPath closePath];
+        
+        if (backgroundColor == [UIColor clearColor]) {
+            backgroundColor = [UIColor whiteColor];
+        }
+        
+        [backgroundColor setFill];
+        
+        [bezierPath fill];
+        arrowPointerView.image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        arrowPointerView.autoresizingMask = UIViewAutoresizingNone;
         self.arrowView = arrowPointerView;
     }
-
+    
     return self.arrowView;
-
+    
 }
 
 @end

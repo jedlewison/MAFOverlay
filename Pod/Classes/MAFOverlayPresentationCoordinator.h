@@ -60,4 +60,7 @@ It also creates an MAFOverlayPresentationContext (an `MAFOverlayPresentationCont
  The presentation context is responsible for managing the presentaiton layout. The presentation coordinator is responsible for creating this object. By default, the presentation coordinator assigns itself as the context's dataSource, but you can assign any object that implements the `MAFOverlayPresentationDataSource` protocal to be the datasource. It is a separate object from the coordinator to handle differences between iOS 7 and iOS 8. */
 @property (nonatomic, weak, readonly) id<MAFOverlayPresentationContext> presentationContext;
 
+/** The custom data source is responsible for providing layout attributes and views participating in the presentation. Each dataSource method includes a presentationContext; to make small changes to default behavior, you can ask the presentationContext's datasource to supply a default view or attribute set which you can then tweak and return. */
+@property (nonatomic, weak) id<MAFOverlayPresentationDataSource> customDataSource;
+
 @end

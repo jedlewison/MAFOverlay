@@ -29,10 +29,13 @@
 /** The presentation's dimming background view */
 -(UIView *)dimmingView;
 
+/** The presentation's source view */
+-(UIView *)sourceView;
+
 /**
  The controller's data source. You can use a custom data source to completely control the presentation layout. The presentationCoordinator typically is the data source, but if you want to only slightly tweak its default layout selections, your object can forward messages to the coordinator as a starting point.
  */
-@property (nonatomic, weak) id<MAFOverlayPresentationDataSource> dataSource;
+@property (nonatomic, readonly) id<MAFOverlayPresentationDataSource> dataSource;
 
 @end
 

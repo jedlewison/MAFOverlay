@@ -15,6 +15,8 @@
  */
 @protocol MAFOverlayPresentationDataSource <NSObject>
 
+@optional
+
 /**
  @param presentationContext The presentation's context.
 
