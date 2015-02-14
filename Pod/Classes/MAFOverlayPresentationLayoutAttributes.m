@@ -44,10 +44,10 @@
 -(void)applyToPresentationContext:(id<MAFOverlayPresentationContext>)presentationContext {
     
     MAFOverlayPresentationLayoutAttributes *attributes = [self layoutAttributesForPresentationContext:presentationContext];
-    
-    presentationContext.presentedViewController.view.frame = attributes.frame;
     presentationContext.presentedViewController.view.transform = attributes.transform;
     presentationContext.decorationView.transform = attributes.transform;
+
+    presentationContext.presentedViewController.view.frame = attributes.frame;
     presentationContext.presentedViewController.view.alpha = attributes.alpha;
     presentationContext.decorationView.alpha = attributes.alpha;
     presentationContext.dimmingView.alpha = attributes.dimmingViewAlpha;
@@ -60,7 +60,9 @@
     [presentationContext.containerView bringSubviewToFront:presentationContext.dimmingView];
     [presentationContext.containerView bringSubviewToFront:presentationContext.decorationView];
     [presentationContext.containerView bringSubviewToFront:presentationContext.presentedViewController.view];
-    
+
+
+
 }
 
 - (instancetype)layoutAttributesForPresentationContext:(id<MAFOverlayPresentationContext>)presentationContext {

@@ -20,7 +20,7 @@
 /** The alpha value of the presented view controller's view */
 @property (nonatomic) CGFloat alpha; // default 1.
 
-/** The transform of the presented view controller's view. Not currently implemented. */
+/** The transform of the presented view controller's view. */
 @property (nonatomic) CGAffineTransform transform; // default identify
 
 /** The transparency level for the dimming view */

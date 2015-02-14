@@ -15,6 +15,7 @@ static void *MAFOverlayCoordinatorKey = &MAFOverlayCoordinatorKey;
 
 -(void)prepareViewControllerForOverlayPresentation:(UIViewController *)viewControllerToPresent {
     if (viewControllerToPresent.maf_overlayPresentationCoordinator == nil) {
+        
         MAFOverlayPresentationCoordinator *coordinator = [MAFOverlayPresentationCoordinator overlayPresentationCoordinatorWithPresentedViewController:viewControllerToPresent];
         objc_setAssociatedObject(viewControllerToPresent, MAFOverlayCoordinatorKey, coordinator, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
